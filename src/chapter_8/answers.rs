@@ -116,8 +116,21 @@ pub fn check_5() {
 }
 
 // TASK 6
+fn normalize_spaces(text: &str) -> String {
+    let words = text.split_whitespace();
+    let mut result = String::new();
+    for word in words {
+        if !result.is_empty() {
+            result.push(' ');
+        }
+        result.push_str(word);
+    }
+    result
+}
 pub fn check_6() {
-
+    let text = "  Rust   любит   точность  ";
+    let clean_text = normalize_spaces(text);
+    println!("{clean_text}");
 }
 
 // TASK 7
