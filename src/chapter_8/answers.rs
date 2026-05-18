@@ -151,17 +151,57 @@ pub fn check_7() {
 
     let forbidden_team = command_score_map.get("Chelsea").copied().unwrap_or(0);
     println!("Forbidden team: {forbidden_team}");
-
 }
 
 // TASK 8
+fn print_user_email(users: &HashMap<String, String>, name: &str) {
+    match users.get(name) {
+        Some(mail) => println!("{mail}"),
+        None => println!("Oops"),
+    }
+}
 pub fn check_8() {
+    let mut users: HashMap<String, String> = HashMap::new();
 
+    users.insert(String::from("Alice"), String::from("alice@mail.com"));
+    print_user_email(&users, "Alice");
+
+    users.insert(String::from("Alice"), String::from("new_alice@mail.com"));
+    print_user_email(&users, "Alice");
+
+    users
+        .entry(String::from("Bob"))
+        .or_insert("bob@mail.com".to_string());
+    print_user_email(&users, "Bob");
+
+    users
+        .entry(String::from("Bob"))
+        .or_insert("new_bob@mail.com".to_string());
+    print_user_email(&users, "Bob");
+
+    for (user, mail) in &users {
+        println!("{user}: {mail}");
+    }
 }
 
 // TASK 9
-pub fn check_9() {
+fn count_words(text: &str) -> HashMap<String, i32> {
+    let mut result = HashMap::new();
 
+    for word in text.split_whitespace() {
+        let count = result.entry(word.to_lowercase()).or_insert(0);
+        *count += 1;
+    }
+
+    result
+}
+pub fn check_9() {
+    let text = String::from("Rust rust ownership borrowing Rust");
+    let map = count_words(&text);
+
+    for (key, value) in &map {
+        println!("{key} -> {value}");
+    }
 }
 
 // TASK 10
