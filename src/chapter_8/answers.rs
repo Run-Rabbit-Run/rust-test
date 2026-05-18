@@ -205,6 +205,82 @@ pub fn check_9() {
 }
 
 // TASK 10
-pub fn check_10() {
+fn print_words_count(text: &str) {
+    let mut map: HashMap<String, i32> = HashMap::new();
 
+    for word in text.split_whitespace() {
+        let mut new_word = String::new();
+
+        for ch in word.to_lowercase().chars() {
+            if ch != '.' && ch != ',' && ch != '!' && ch != '?' {
+                new_word.push(ch);
+            }
+        }
+
+        let count = map.entry(new_word).or_insert(0);
+        *count += 1;
+    }
+
+    for (word, count) in &map {
+        println!("{word}: {count}");
+    }
+}
+
+fn print_longest_word(text: &str) {
+    let mut max_char_count = 0;
+    let mut longest_word = String::new();
+
+    for word in text.split_whitespace() {
+        let mut new_word = String::new();
+
+        for ch in word.to_lowercase().chars() {
+            if ch != '.' && ch != ',' && ch != '!' && ch != '?' {
+                new_word.push(ch);
+            }
+        }
+
+        let new_word_char_count = new_word.chars().count();
+
+        if new_word_char_count > max_char_count {
+            max_char_count = new_word_char_count;
+            longest_word = new_word;
+        }
+    }
+
+    println!("Самое длинное слово: {}", longest_word);
+}
+
+fn analyze_text(text: &str) {
+    let mut array: Vec<String> = Vec::new();
+
+    for word in text.split_whitespace() {
+        let mut new_word = String::new();
+
+        for ch in word.to_lowercase().chars() {
+            if ch != '.' && ch != ',' && ch != '!' && ch != '?' {
+                new_word.push(ch);
+            }
+        }
+
+        array.push(new_word);
+    }
+
+    println!("Количество слов: {}", array.len());
+}
+
+// TODO: refactor
+pub fn check_10() {
+    let text =
+        String::from("Rust makes systems programming accessible. Rust makes safety practical.");
+
+    analyze_text(&text);
+    print_longest_word(&text);
+    print_words_count(&text);
+
+    let text =
+        String::from("Rust величайший язык программирования во вселенной!");
+
+    analyze_text(&text);
+    print_longest_word(&text);
+    print_words_count(&text);
 }
