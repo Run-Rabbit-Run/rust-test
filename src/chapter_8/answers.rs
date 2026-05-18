@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 // TASK 1
 pub fn check_1() {
     let temperatures: Vec<i32> = vec![18, 20, 21, 19, 17, 22, 23];
@@ -135,6 +137,20 @@ pub fn check_6() {
 
 // TASK 7
 pub fn check_7() {
+    let mut command_score_map: HashMap<String, i32> = HashMap::new();
+    command_score_map.insert(String::from("MU"), 8);
+    command_score_map.insert(String::from("Leeds"), 0);
+    command_score_map.insert(String::from("Zenit"), 1);
+
+    for (key, value) in &command_score_map {
+        println!("{key}: {value}");
+    }
+
+    let mu_score = command_score_map.get("MU").copied().unwrap_or(0);
+    println!("MU score: {mu_score}");
+
+    let forbidden_team = command_score_map.get("Chelsea").copied().unwrap_or(0);
+    println!("Forbidden team: {forbidden_team}");
 
 }
 
