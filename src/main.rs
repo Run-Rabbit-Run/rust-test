@@ -1,5 +1,5 @@
-mod chapter_8;
+mod chapter_9;
 
 fn main() {
-    chapter_8::answers::check_10();
+    chapter_9::answers::check_6();
 }
