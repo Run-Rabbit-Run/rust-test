@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::ErrorKind;
+use std::io::{self, Read};
 
 // TASK 1
 fn print_number_at(numbers: &[i32], index: usize) {
@@ -83,10 +84,59 @@ pub fn check_6() {
 }
 
 // TASK 7
-pub fn check_7() {}
+fn read_file_manual(path: &str) -> Result<String, io::Error> {
+    let file_result = File::open(path);
+
+    let mut file = match file_result {
+        Ok(f) => f,
+        Err(e) => return Err(e),
+    };
+
+    let mut buffer = String::new();
+
+    match file.read_to_string(&mut buffer) {
+        Ok(_) => Ok(buffer),
+        Err(e) => Err(e),
+    }
+}
+
+pub fn check_7() {
+    match read_file_manual("Cargo.toml") {
+        Ok(string) => println!("{string}"),
+        Err(e) => println!("Error, {e}"),
+    }
+    match read_file_manual("missing.txt") {
+        Ok(string) => println!("{string}"),
+        Err(e) => println!("Error, {e}"),
+    }
+}
 
 // TASK 8
-pub fn check_8() {}
+fn read_file_short(path: &str) -> Result<String, io::Error> {
+    let mut file = File::open(path)?;
+
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;
+    Ok(contents)
+}
+
+fn read_file_builtin(path: &str) -> Result<String, std::io::Error> {
+    std::fs::read_to_string(path)
+}
+
+pub fn check_8() {
+    for input in ["Cargo.toml", "missing.txt"] {
+        match read_file_short(input) {
+            Ok(string) => println!("File {input}:\n{string}"),
+            Err(e) => println!("File {input} error:\n{e}"),
+        }
+
+        match read_file_builtin(input) {
+            Ok(string) => println!("File {input}:\n{string}"),
+            Err(e) => println!("File {input} error:\n{e}"),
+        }
+    }
+}
 
 // TASK 9
 pub fn check_9() {}
