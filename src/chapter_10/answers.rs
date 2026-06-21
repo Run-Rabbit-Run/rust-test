@@ -85,7 +85,49 @@ pub fn check_2() {
 
 pub fn check_3() {}
 
-pub fn check_4() {}
+enum Slot<T> {
+    Empty,
+    Filled(T),
+}
+
+impl<T> Slot<T> {
+    fn is_empty(&self) -> bool {
+        matches!(self, Slot::Empty)
+    }
+
+    fn is_filled(&self) -> bool {
+        matches!(self, Slot::Filled(_))
+    }
+
+    fn replace(&mut self, value: T) -> Option<T> {
+        let old_slot = std::mem::replace(self, Slot::Filled(value));
+
+        match old_slot {
+            Slot::Empty => None,
+            Slot::Filled(old) => Some(old),
+        }
+    }
+}
+
+pub fn check_4() {
+    let mut slot = Slot::Filled(String::from("Hi"));
+    println!("Is empty: {}", slot.is_empty());
+    println!("Is filled: {}", slot.is_filled());
+    let replaced = slot.replace(String::from("Mom"));
+    match replaced {
+        None => println!("None"),
+        Some(res) => println!("Res: {res}"),
+    }
+
+    let mut slot = Slot::Filled(32);
+    println!("Is empty: {}", slot.is_empty());
+    println!("Is filled: {}", slot.is_filled());
+    let replaced = slot.replace(88);
+    match replaced {
+        None => println!("None"),
+        Some(res) => println!("Res: {res}"),
+    }
+}
 
 pub fn check_5() {}
 
