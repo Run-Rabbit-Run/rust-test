@@ -83,7 +83,20 @@ pub fn check_2() {
     println!("After swap => x: {}, y: {}", point.x(), point.y());
 }
 
-pub fn check_3() {}
+impl Point<f64, f64> {
+    fn distance_from_origin(&self) -> f64 {
+        f64::sqrt(self.x * self.x + self.y * self.y)
+    }
+}
+
+pub fn check_3() {
+    let point = Point::new(3.0, 4.0);
+    println!("Расстояние {}", point.distance_from_origin());
+
+    let _point = Point::new(3, 4);
+    // Нельзя вызвать метод, т.к. метод написан для структуры с другим типом
+    // println!("Расстояние {}", point.distance_from_origin());
+}
 
 pub fn check_4() {}
 
